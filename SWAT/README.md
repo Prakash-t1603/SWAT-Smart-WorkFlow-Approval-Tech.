@@ -221,3 +221,5 @@ pass     : admin123
 
 "add a mail id and password in admin page -> user add/remove for login"
 """
+
+Video Link : https://drive.google.com/file/d/1jU6sRfbfvKgmDTFIvqTLZkRKhdbj892x/view?usp=sharing
