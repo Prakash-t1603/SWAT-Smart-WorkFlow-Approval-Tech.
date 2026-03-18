@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SWAT - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script defer src="./js/darkmode.js"></script>
+    <script defer src="./js/auth.js"></script>
+  </head>
+  <body>
+    <div class="auth-wrap">
+      <form id="loginForm" class="auth-card glass soft-card">
+        <div class="flex justify-between items-center mb-5">
+          <h2 class="text-2xl font-bold">Login</h2>
+          <button
+            type="button"
+            class="btn-secondary text-sm theme-icon-btn"
+            data-dark-toggle
+            data-theme-symbol="true"
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          >
+            &#9790;
+          </button>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-300 mb-5">Welcome back to SWAT.</p>
+        <div class="space-y-4">
+          <div>
+            <label class="text-sm font-medium">Email</label>
+            <input class="input mt-1" type="email" name="email" required placeholder="you@company.com" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Password</label>
+            <input class="input mt-1" type="password" name="password" required placeholder="********" />
+            <div class="mt-2 text-right">
+              <a class="text-sky-600 font-semibold text-sm" href="./reset-password.html">Forgot password?</a>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm font-medium">Login As</label>
+            <select class="input mt-1" name="loginRole" required>
+              <option value="System Admin">Admin</option>
+              <option value="CEO">CEO</option>
+              <option value="COO">COO</option>
+              <option value="CFO">CFO</option>
+              <option value="CTO">CTO</option>
+              <option value="HR Director">HR Director</option>
+              <option value="Operations Manager">Operations Manager</option>
+              <option value="Finance Manager">Finance Manager</option>
+              <option value="Audit Manager">Audit Manager</option>
+              <option value="Development Manager">Development Manager</option>
+              <option value="IT Support Manager">IT Support Manager</option>
+              <option value="HR Manager">HR Manager</option>
+              <option value="Training Manager">Training Manager</option>
+              <option value="Team Leader">Team Leader</option>
+              <option value="Team Lead">Team Lead</option>
+              <option value="Senior Employee">Senior Employee</option>
+              <option value="Senior Developer">Senior Developer</option>
+              <option value="Employee">Employee</option>
+              <option value="Developer">Developer</option>
+              <option value="Accountant">Accountant</option>
+              <option value="Financial Analyst">Financial Analyst</option>
+              <option value="Auditor">Auditor</option>
+              <option value="Recruiter">Recruiter</option>
+              <option value="HR Executive">HR Executive</option>
+              <option value="Support Engineer">Support Engineer</option>
+              <option value="Trainer">Trainer</option>
+            </select>
+          </div>
+          <button class="btn-primary w-full" type="submit">Login</button>
+        </div>
+        <p id="authMessage" class="text-sm mt-4 text-center"></p>
+      </form>
+    </div>
+  </body>
+</html>

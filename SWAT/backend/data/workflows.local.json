@@ -1,0 +1,29 @@
+[
+  {
+    "id": "WF-EXP-1",
+    "name": "Expense Small",
+    "description": "Expense <= 2000",
+    "requestType": "expense",
+    "minAmount": 0,
+    "maxAmount": 2000,
+    "levels": [
+      "Operations Manager",
+      "COO"
+    ],
+    "createdAt": "2026-03-05T17:51:13.018153+00:00"
+  },
+  {
+    "id": "WF-EXP-2",
+    "name": "Expense Standard",
+    "description": "Expense > 2000",
+    "requestType": "expense",
+    "minAmount": 2001,
+    "maxAmount": null,
+    "levels": [
+      "Finance Manager",
+      "CFO",
+      "CEO"
+    ],
+    "createdAt": "2026-03-05T17:51:13.018184+00:00"
+  }
+]

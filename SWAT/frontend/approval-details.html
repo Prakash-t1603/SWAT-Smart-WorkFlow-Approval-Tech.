@@ -1,0 +1,96 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SWAT - Approval Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script defer src="./js/darkmode.js"></script>
+    <script defer src="./js/realtime.js"></script>
+    <script defer src="./js/auth.js"></script>
+    <script defer src="./js/workflow.js"></script>
+  </head>
+  <body data-admin-protected="true">
+    <div class="page-shell">
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-extrabold">Approval Request Details</h1>
+        <div class="flex gap-2">
+          <button
+            class="btn-secondary theme-icon-btn"
+            type="button"
+            data-dark-toggle
+            data-theme-symbol="true"
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          >
+            &#9790;
+          </button>
+          <button class="btn-secondary theme-icon-btn" type="button" id="deleteRequestBtn" aria-label="Delete request" title="Delete request">
+            &#128465;
+          </button>
+          <button class="btn-secondary" type="button" data-logout-all data-logout-redirect="./login.html">Logout</button>
+          <a href="./approvals.html" class="btn-secondary">Back to Chain</a>
+        </div>
+      </div>
+
+      <section class="glass soft-card p-6 mb-4">
+        <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+          <h2 class="text-xl font-bold" id="approvalRequestTitle">Request Details</h2>
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold">Current Status:</span>
+            <span id="currentStatusPill" data-current-status class="status-pill status-pending">Pending</span>
+          </div>
+        </div>
+
+        <div class="detail-grid">
+          <article class="glass rounded-2xl p-4">
+            <h3 class="font-semibold mb-3">User Details</h3>
+            <div class="space-y-2">
+              <div class="kv"><strong>Name</strong><span id="detailUserName">-</span></div>
+              <div class="kv"><strong>Email</strong><span id="detailUserEmail">-</span></div>
+              <div class="kv"><strong>Department</strong><span id="detailUserDept">-</span></div>
+              <div class="kv"><strong>Employee ID</strong><span id="detailUserEmployeeId">-</span></div>
+            </div>
+          </article>
+
+          <article class="glass rounded-2xl p-4">
+            <h3 class="font-semibold mb-3">Request Details</h3>
+            <div class="space-y-2">
+              <div class="kv"><strong>Request Type</strong><span id="detailRequestType">-</span></div>
+              <div class="kv"><strong>Title</strong><span id="detailTitle">-</span></div>
+              <div class="kv"><strong>Amount</strong><span id="detailAmount">-</span></div>
+              <div class="kv"><strong>Submitted</strong><span id="detailSubmitted">-</span></div>
+              <div class="kv"><strong>Reason</strong><span id="detailReason">-</span></div>
+              <div class="kv"><strong>Current Role</strong><span id="detailCurrentRole">-</span></div>
+              <div class="kv"><strong>Rejected Count</strong><span id="detailRejectCount">0</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="glass soft-card p-6">
+        <h3 class="font-semibold mb-3">Approval Options</h3>
+        <textarea id="approvalComment" class="input mb-3" rows="2" placeholder="Comment or rejection reason"></textarea>
+        <input id="forwardToEmail" class="input mb-3" placeholder="Forward Request(Enter e-mail Id)" autocomplete="off" />
+        <div class="action-row">
+          <button class="btn-primary" type="button" data-approval-action="approve">Accept</button>
+          <button class="btn-secondary" type="button" data-approval-action="forward">Forward</button>
+          <button class="btn-danger" type="button" data-approval-action="reject">Reject</button>
+        </div>
+        <p id="approvalActionMessage" class="text-sm mt-4 text-slate-600 dark:text-slate-300">
+          Choose an action to update request status.
+        </p>
+      </section>
+    </div>
+  </body>
+</html>

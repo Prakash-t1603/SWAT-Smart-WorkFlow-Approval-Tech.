@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SWAT - Approval Chain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      
+      tailwind.config = { darkMode: "class" };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script defer src="./js/darkmode.js"></script>
+    <script defer src="./js/realtime.js"></script>
+    <script defer src="./js/auth.js"></script>
+    <script defer src="./js/workflow.js"></script>
+  </head>
+  <body data-admin-protected="true">
+    <div class="page-shell">
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-extrabold">Approval Chain</h1>
+        
+        <div class="flex gap-2">
+            <button
+              class="btn-secondary theme-icon-btn"
+              type="button"
+              data-dark-toggle
+              data-theme-symbol="true"
+              aria-label="Toggle theme"
+              title="Toggle theme"
+            >
+              &#9790;
+            </button>
+            <a href="./employee-admin.html" class="btn-secondary" data-admin-only="true" hidden>User Add/Remove</a>
+            <button class="btn-secondary" type="button" data-logout-all data-logout-redirect="./login.html">Logout</button>
+            <a href="./dashboard.html" class="btn-secondary">Dashboard</a>
+          </div>
+      </div>
+
+      <section class="glass soft-card p-6">
+        <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+          <h2 class="text-xl font-bold">Pending Approval Inbox</h2>
+          <div class="flex gap-2 items-center">
+            <span class="text-sm font-medium">Approver Role:</span>
+            <span id="approverRoleLabel" class="status-pill status-pending">-</span>
+            <button class="btn-secondary" id="refreshApprovalsBtn" type="button">Refresh</button>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-semibold mb-2">Mail Notifications</h3>
+          <div id="mailList" class="space-y-2 text-sm"></div>
+        </div>
+
+        <div class="mt-6">
+          <h3 class="font-semibold mb-2">Requests Waiting For Your Action</h3>
+          <div id="pendingApprovalsList" class="space-y-3"></div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

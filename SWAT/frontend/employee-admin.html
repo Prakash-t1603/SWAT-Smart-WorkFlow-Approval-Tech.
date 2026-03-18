@@ -1,0 +1,79 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SWAT - Employee Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script defer src="./js/darkmode.js"></script>
+    <script defer src="./js/realtime.js"></script>
+    <script defer src="./js/auth.js"></script>
+    <script defer src="./js/employee-admin.js"></script>
+  </head>
+  <body data-admin-protected="true" data-admin-required="admin">
+    <div class="page-shell">
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-extrabold">Employee Admin</h1>
+        <div class="flex gap-2">
+          <button
+            class="btn-secondary theme-icon-btn"
+            type="button"
+            data-dark-toggle
+            data-theme-symbol="true"
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          >
+            &#9790;
+          </button>
+          <button class="btn-secondary" type="button" data-logout-all data-logout-redirect="./login.html">Logout</button>
+          <a href="./dashboard.html" class="btn-secondary">Dashboard</a>
+        </div>
+      </div>
+
+      <section class="glass soft-card p-6 mb-5">
+        <h2 class="text-xl font-bold mb-3">Add Employee</h2>
+        <form id="employeeForm" class="grid md:grid-cols-2 gap-3">
+          <input class="input" id="empName" placeholder="Full Name" required />
+          <input class="input" id="empEmail" type="email" placeholder="Email" required />
+          <input class="input" id="empPassword" type="text" placeholder="Password" required />
+          <input class="input" id="empOrgRole" placeholder="Org Role (e.g., Employee, Team Leader)" required />
+          <select class="input md:col-span-2" id="empReportsTo">
+            <option value="">No Manager (Top level)</option>
+          </select>
+          <div class="md:col-span-2">
+            <button class="btn-primary" type="submit">Add Employee</button>
+          </div>
+        </form>
+        <p id="employeeAdminMessage" class="text-sm mt-3"></p>
+      </section>
+
+      <section class="glass soft-card p-6">
+        <h2 class="text-xl font-bold mb-3">Employees</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-left border-b border-slate-300/30">
+                <th class="py-2">Name</th>
+                <th class="py-2">Role</th>
+                <th class="py-2">Reports To</th>
+                <th class="py-2">Email</th>
+                <th class="py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody id="employeeTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

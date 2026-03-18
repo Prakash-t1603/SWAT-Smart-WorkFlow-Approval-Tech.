@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SWAT - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script defer src="./js/darkmode.js"></script>
+    <script defer src="./js/realtime.js"></script>
+    <script defer src="./js/auth.js"></script>
+    <script defer src="./js/charts.js"></script>
+    <script defer src="./js/requests.js"></script>
+  </head>
+  <body>
+    <div class="dashboard-layout">
+      <aside id="sidebar" class="sidebar glass">
+        <h2 class="text-xl font-bold mb-6">SWAT</h2>
+        <nav class="space-y-2">
+          <a class="block p-3 rounded-xl glass soft-card" href="./dashboard.html">Dashboard</a>
+          <a class="block p-3 rounded-xl hover:bg-sky-100/40" href="./employee-admin.html" data-admin-only="true" hidden>Employee Admin</a>
+          <a class="block p-3 rounded-xl hover:bg-sky-100/40" href="./workflows.html">Workflows</a>
+          <a class="block p-3 rounded-xl hover:bg-sky-100/40" href="./workflow-builder.html">Workflow Builder</a>
+          <a class="block p-3 rounded-xl hover:bg-sky-100/40" href="./approvals.html">Approval Chain</a>
+          <a class="block p-3 rounded-xl hover:bg-sky-100/40" href="./index.html">Home</a>
+        </nav>
+      </aside>
+      <main class="main-pane">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <button class="btn-secondary mobile-menu-btn" type="button" data-sidebar-toggle>Menu</button>
+            <h1 class="text-3xl font-bold">Dashboard</h1>
+          </div>
+          <div class="flex gap-2">
+            <button
+              class="btn-secondary theme-icon-btn"
+              type="button"
+              data-dark-toggle
+              data-theme-symbol="true"
+              aria-label="Toggle theme"
+              title="Toggle theme"
+            >
+              &#9790;
+            </button>
+            <button class="btn-secondary theme-icon-btn" type="button" id="openProfileBtn" aria-label="Profile" title="Profile">&#128100;</button>
+            <button class="btn-secondary" type="button" data-logout-all data-logout-redirect="./login.html">Logout</button>
+          </div>
+        </div>
+
+        <div id="profileModal" class="fixed inset-0 z-50 hidden" aria-hidden="true">
+          <div class="absolute inset-0 bg-slate-950/50"></div>
+          <div class="relative mx-auto mt-16 w-[min(720px,92vw)] glass soft-card p-6">
+            <div class="flex items-center justify-between gap-2">
+              <h2 class="text-xl font-bold">Profile</h2>
+              <button class="btn-secondary" type="button" id="closeProfileBtn">Close</button>
+            </div>
+            <div class="grid md:grid-cols-2 gap-3 mt-4">
+              <input class="input" id="profileNameModal" type="text" placeholder="Name" />
+              <input class="input" id="profileEmailModal" type="email" placeholder="Email" readonly />
+              <input class="input" id="profileDepartmentModal" type="text" placeholder="Department" />
+              <input class="input" id="profileEmployeeIdModal" type="text" placeholder="Employee ID" />
+              <input class="input md:col-span-2" id="profilePhoneModal" type="tel" placeholder="Phone number" />
+            </div>
+            <div class="flex items-center justify-between gap-2 mt-4 flex-wrap">
+              <p id="profileModalMessage" class="text-sm"></p>
+              <button class="btn-primary" type="button" id="saveProfileModalBtn">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <section class="glass soft-card p-5 mb-5">
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <h2 class="text-xl font-bold">Submit New Request</h2>
+            <p id="userIdentity" class="text-sm text-slate-600 dark:text-slate-300"></p>
+          </div>
+
+          <form id="requestForm" class="grid md:grid-cols-3 gap-3">
+            <input class="input" id="requestFromEmail" type="email" placeholder="From (your email)" readonly />
+            <input class="input" id="requestToEmail" type="email" list="toEmailOptions" placeholder="To (approver email)" required />
+            <datalist id="toEmailOptions"></datalist>
+            <select class="input" id="requestType" required>
+              <option value="general" selected>General Request</option>
+              <option value="task">Task Help</option>
+              <option value="leave">Leave</option>
+              <option value="support">Support</option>
+              <option value="expense">Expense / Money</option>
+            </select>
+            <input class="input" id="requestTitle" type="text" placeholder="Title (e.g., Laptop issue, Team support)" required />
+            <input class="input" id="requestAmount" type="number" min="0" step="0.01" placeholder="Amount (optional)" />
+            <textarea class="input md:col-span-3" id="requestReason" rows="2" placeholder="Describe your request clearly" required></textarea>
+            <div class="md:col-span-3">
+              <button type="submit" class="btn-primary">Send Request</button>
+            </div>
+          </form>
+          <p id="requestMessage" class="text-sm mt-3"></p>
+        </section>
+
+        <section class="glass soft-card p-5 mb-5">
+          <h3 class="text-lg font-bold mb-1">Organization Workflow View</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">CEO can view all employees. Manager/TL views are limited to their own teams.</p>
+          <div id="orgChartGrid" class="org-grid"></div>
+          <div class="mt-5">
+            <h4 class="text-base font-bold mb-2" id="selectedNodeRequestsTitle">Selected Member Request Content</h4>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="text-left border-b border-slate-300/30">
+                    <th class="py-2">Request ID</th>
+                    <th class="py-2">Requester</th>
+                    <th class="py-2">Request</th>
+                    <th class="py-2">Status</th>
+                    <th class="py-2">Created</th>
+                  </tr>
+                </thead>
+                <tbody id="selectedNodeRequestTableBody">
+                  <tr>
+                    <td class="py-3 text-slate-500 dark:text-slate-300" colspan="5">Click a member card to view request content.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid md:grid-cols-3 gap-4 mb-5">
+          <article class="glass soft-card p-5">
+            <p class="text-sm text-slate-5000 dark:text-slate-3000">Total Requests</p>
+            <h3 class="text-3xl font-extrabold mt-2" id="metricTotalRequests">0</h3>
+          </article>
+          <article class="glass soft-card p-5">
+            <p class="text-sm text-slate-5000 dark:text-slate-3000">Pending Approvals</p>
+            <h3 class="text-3xl font-extrabold mt-2" id="metricPendingRequests">0</h3>
+          </article>
+          <article class="glass soft-card p-5">
+            <p class="text-sm text-slate-5000 dark:text-slate-3000">Approved Requests</p>
+            <h3 class="text-3xl font-extrabold mt-2" id="metricApprovedRequests">0</h3>
+          </article>
+        </section>
+
+        <section class="glass soft-card p-5 mb-5">
+          <h3 class="text-lg font-bold mb-3">My Request Status</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="text-left border-b border-slate-300/30">
+                  <th class="py-2">Request ID</th>
+                  <th class="py-2">Amount</th>
+                  <th class="py-2">Request</th>
+                  <th class="py-2">Status</th>
+                  <th class="py-2">Created</th>
+                  <th class="py-2">Action</th>
+                </tr>
+              </thead>
+              <tbody id="requestTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-4">
+          <article class="glass soft-card p-5 chart-card">
+            <h3 class="text-lg font-bold mb-3">Approval Trends</h3>
+            <canvas id="approvalTrendChart"></canvas>
+          </article>
+          <article class="glass soft-card p-5 chart-card">
+            <h3 class="text-lg font-bold mb-3">Request Breakdown</h3>
+            <canvas id="requestStatusChart"></canvas>
+          </article>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
